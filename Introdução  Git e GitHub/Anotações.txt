@@ -1,0 +1,258 @@
+Comandos Básicos para um bom desempenho no terminal
+A maria dos softwares tem interação graficas, tudo é responsivo 
+O Git não tem uma interface grafica
+É atraves do fit comando
+
+Gui x Cli
+
+Primeiros comandos
+
+- Comandos básicos para um bom desempenho do terminal
+
+Dir - para listar as pastas que se encontra no diretório
+cd / - vai para a base de diretório
+cls - limpar o termminal do windowns
+Tecla TAB - Função de auto completar
+Mkdir Nome da pasta - Criar uma pasta
+echo hello - printar uma frase dentro da pasta 
+echo hello > hello.txt - criar um arquivo txt dentro de uma pasta
+del workspace - deleta os arquivos que estppa dentro da pasta
+rmdir workspace /s /q - remover o repositório todo
+
+- Realizando a instalação do GIT
+
+Baixar a aplicação através do site do git https://git-scm.com/download/win
+Realizar a instalação
+1 - next
+2 - deixar selecionado git bash here e git gui here - next
+3 - deixar a opção "use vim"(the ubiquitous text editor) as Git's default editor - next
+4 - let git decide
+Observação: se for trabalhar com o git o melhor é deixar a opção "override the defaut branch name for new repositories"
+5 - git from the command line and also - next 
+6 - Use bundlend OpenSSH - next
+7 - Use the Open SSL library
+8 - Checkout Windowns-style, commit Unix-style line endings - next
+9 - Use MinTTY (the default terminnal of MSYS2) - next
+10 - Default ( fast-forward or merge) - next
+11 - Git Credential Manager Core - next
+12 - Enable file system caching e enable symbolic links
+13 - Install
+
+
+- Tópicos fundamentais para entender o funcionamento do Git
+
+SHA - (algoritmo de Hash Seguro) Conjunto de funções hash criptografadas projetadas pela NASA (Agencia de Segurança Nacional dos EUA)
+Gera um consjunto de caracteres dde 40 digitos
+
+Passar o algoritimo pela criptogração SHA 1 comando --> openssl sha1 texto.tx
+ele gera o conjunt de caracteres
+
+
+---
+
+- Objetos internos do Git
+
+blob - ele vai criar metadados do gite, tamanho da string entre outros 
+echo 'conteudo' | git hash-object --stdin
+echo -e 'blob 9\0conteudo' | openssl sha1
+
+Tree - (arvore) armazena os blob  responsaveis por montar toda a estrutura de onde esta os arquivos
+
+commit - juntar tudo 
+aponta para uma tree - parente - autor - mensagem - timestamp
+
+blob (arquivos) -> tree (Que aponta para os blob's) -> commit (conjunto de alterações) qque tem todos os metadados.
+
+Git - Sistema distribuido seguro.
+
+- Chave SSH e Token
+
+Chave SSH - forma de estabelecer uma forma segura e cripitada entre dois servidores.
+
+Comandos
+
+1 passo
+$ ssh-keygen -t ed25519 -C "carolina.alvesoli@hotmail.com"
+Generating public/private ed25519 key pair.
+Enter file in which to save the key (/c/Users/Carol/.ssh/id_ed25519):
+Created directory '/c/Users/Carol/.ssh'.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Passphrases do not match.  Try again.
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /c/Users/Carol/.ssh/id_ed25519
+Your public key has been saved in /c/Users/Carol/.ssh/id_ed25519.pub
+The key fingerprint is:
+SHA256:Bid3c18enK8Nh8rKAmEPdgEl4ofQyyfbV65zwCXabf4 carolina.alvesoli@hotmail.com
+The key's randomart image is:
++--[ED25519 256]--+
+|  ... oo.        |
+|   o.o ..     . .|
+|   .o.+ o.o .  +.|
+|    +.*=o.oo . +o|
+|     B OS*    + +|
+|    . +.* +. . = |
+|       o =  o . .|
+|        +.o.     |
+|         +o.E    |
++----[SHA256]-----+
+
+---
+2 passo
+ir na pasta que as chaves estão salvas 
+$ cd /c/Users/Carol/.ssh/  --enter
+ls - lista as chave publica e privada 
+cat id_ed25519.pub + enter  --- o sistema iraa mostrar  a chave publica e  este que iremoscolar lá no github
+
+$ cat id_ed25519.pub
+ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIjekuvHVGOZRqI4xhfLayKOUVxC2BX88/IN2TcJZ56y carolina.alvesoli@hotmail.com
+
+
+Ir nogithub e colar no seguinte caminho 
+settings - SSH and GPG Keys
+
+key - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIjekuvHVGOZRqI4xhfLayKOUVxC2BX88/IN2TcJZ56y carolina.alvesoli@hotmail.com
+Será direcionado para confirmar o passoword
+
+Associa umma das chaves a sua conta.
+------
+
+3 passo
+Ls - para listas as chaves 
+pwd - listar o caminho
+
+Vamos inicializar a ssh age responsavel por pegar as chaves e lidar com elas
+
+Carol@HOME-WORK MINGW64 ~/.ssh
+$ ls
+id_ed25519  id_ed25519.pub
+
+vou adicionar o age 
+
+Carol@HOME-WORK MINGW64 ~/.ssh
+$ ssh-add id_ed25519
+
+colocar senha 
+Enter passphrase for id_ed25519:
+Identity added: id_ed25519 (carolina.alvesoli@hotmail.com)
+
+ 
+Para testar SHH 
+copiar o link que esta no ssh 
+
+Carol@HOME-WORK MINGW64 ~/.ssh
+$ git clone git@github.com:alvesoli/Carol_DioProject.git
+Cloning into 'Carol_DioProject'...
+The authenticity of host 'github.com (20.201.28.151)' can't be established.
+ED25519 key fingerprint is SHA256:+DiY3wvvV6TuJJhbpZisF/zLDA0zPMSvHdkr4UvCOqU.
+This key is not known by any other names
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com' (ED25519) to the list of known hosts.
+remote: Enumerating objects: 6, done.
+remote: Counting objects: 100% (6/6), done.
+remote: Compressing objects: 100% (4/4), done.
+remote: Total 6 (delta 1), reused 6 (delta 1), pack-reused 0
+Receiving objects: 100% (6/6), 567.26 KiB | 1.17 MiB/s, done.
+Resolving deltas: 100% (1/1), done.
+
+Carol@HOME-WORK MINGW64 ~/.ssh
+$ ls
+Carol_DioProject/  id_ed25519  id_ed25519.pub  known_hosts  known_hosts.o
+
+Token de acesso pessoal 
+Ir no github
+settings - developer settings - personal access token - token refinados - gerar novo token 
+selecionar repositório 
+colocar um nome e selecionar gerar
+copiar e salvar 
+
+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
+
+ir no repositório pessoal e selecionar a opção de HTTPS
+https://github.com/alvesoli/Carol_DioProject.git
+
+vamos terminal para clonar 
+git clone colar olinl HTTPS
+https://github.com/alvesoli/Carol_DioProject.git
+
+
+-Iniciando o Git e criando commit 
+Criar uma pasta Workspace no c: 
+ir no diretório c e iniciar o git bash here
+
+Ls - para listar as pastas
+mkdir livro-receitas - criar uma pasta dentro do repositório
+ls - verificar se criou a pasta
+cd livro-receitas - navegar dentro da pasta
+git init - iniciar o arquivo dentro do repositório
+ls -a -- mostra arquivos ocultos
+cd .git/ -- entrar dentro da pasta 
+cd .. -- voltar um nivel
+
+se é o primeiro acesso precisa realizar as configurações
+git config --global user.email "carolina.alvesoli@hotmail.com"
+git config --	global user.name aalvesoli
+
+>adicionar um arquivo
+Criar um arquivo Markdown é uma forma simples de escrever HTML sem entender HTML
+
+commitar
+git add*
+git commit -m "commo"
+
+-Passo a passo no Ciclo de vida 
+git init - criar um repositório
+Tracked e untracked
+
+Dentro de tracked - Unmodified - Modified -Staged
+Dentro e Untracked Adicionar o arquivo - editar o arquivo - Stage o arquivo
+-Remove o arquivo - commit
+
+O que os dois repositórios significa
+
+2 ambientes
+Servidor - Remotte Repository
+Ambiente de desenvovimento - Working directory - staging area - Local repository
+
+comandos
+git status - mostra se foi comitado ou não
+mv nome da pasta
+Carol@HOME-WORK MINGW64 /c/Workspace/livro-receitas (master)
+$ mv strogonoff.md.txt ./receitas/
+ 
+---
+
+-Trabalhando com Github
+Entrar no Github e criar uma conta
+
+Para configurar o gir é necessario verificar primeiro quais configurações foram setadas
+comando
+Git config --list
+
+Para apagar para fazer as configurações novamente 
+git config --global --unset user.email
+git config --global --unset user.nickname
+
+Vc pode configuraar novamente 
+git config --global user.email""
+git config --global user.nickname""
+
+Ir no github apos criar  o login e senha
+Ir em seus repositórios
+Novo
+Nome do  repositório e se é publicou o private
+Criar repositório
+Copiar o link gerado 
+
+Ir no gitbash da maquina aonde esta a pasta receita
+
+Comandos 
+ls -  verificar se foi criado  o arquivo readme
+git remote add origin https://github.com/alvesoli/Livro-receitas.git  --- empurrar adicionar a origem que esta enviado  os arquivos
+git remove -v ---  vai lista a lista de respositório
+git status -- para verificar que não tem nenhuma pendencia no repositório
+git push origin master --- para empurrar
+
+
+
